@@ -1,0 +1,6 @@
+{
+"dbhost": "myyshopp-production.cqwtcxi6usi5.ap-south-1.rds.amazonaws.com",
+"dbuser":"storedigadmin",
+"dbpassword":"digst0r3654",
+"dbdatabase": "myyshopp-testdb"
+}

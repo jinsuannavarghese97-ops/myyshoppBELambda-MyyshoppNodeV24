@@ -41,7 +41,8 @@ methods.index = function (client, jsonObj, event, callback) {
         let key = results[0][0].config_value;
         let text = decodedPassword;
 
-        let cipher = crypto.createCipher(algorithm, key);
+        var _evp = require('evp_bytestokey')(Buffer.from(key), null, 256, 16);
+        let cipher = crypto.createCipheriv(algorithm, _evp.key, _evp.iv);
         let encryptedPassword = cipher.update(text, 'utf8', 'hex') + cipher.final('hex');
         let siteId = event.siteId;
         let authenticationApiExist = false;
@@ -158,7 +159,8 @@ methods.index = function (client, jsonObj, event, callback) {
                     if (result3[3].length > 0) {
                         console.log("11....")
                         var textBuyer = result3[3][0].userId + "-" + siteId;
-                        var cipher = crypto.createCipher(algorithm, key);
+                        var _evp = require('evp_bytestokey')(Buffer.from(key), null, 256, 16);
+                        var cipher = crypto.createCipheriv(algorithm, _evp.key, _evp.iv);
                         var encryptedUrl = cipher.update(textBuyer, 'utf8', 'hex') + cipher.final('hex');
 
 
@@ -306,7 +308,8 @@ methods.index = function (client, jsonObj, event, callback) {
                     else if (result3[6].length > 0) {
                         console.log("12....")
                         var textBuyer = result3[6][0].userId + "-" + siteId;
-                        var cipher = crypto.createCipher(algorithm, key);
+                        var _evp = require('evp_bytestokey')(Buffer.from(key), null, 256, 16);
+                        var cipher = crypto.createCipheriv(algorithm, _evp.key, _evp.iv);
                         var encryptedUrl = cipher.update(textBuyer, 'utf8', 'hex') + cipher.final('hex');
 
                         userData[0] = {
@@ -353,7 +356,8 @@ methods.index = function (client, jsonObj, event, callback) {
                         //if (result3[1][0].siteSellerId == result1[0].siteId) {
 
                         var textSeller = result3[1][0].userId + "-" + siteId;
-                        var cipher = crypto.createCipher(algorithm, key);
+                        var _evp = require('evp_bytestokey')(Buffer.from(key), null, 256, 16);
+                        var cipher = crypto.createCipheriv(algorithm, _evp.key, _evp.iv);
                         var encryptedUrl = cipher.update(textSeller, 'utf8', 'hex') + cipher.final('hex');
 
 
@@ -408,7 +412,8 @@ methods.index = function (client, jsonObj, event, callback) {
                         let base64data = buff.toString('base64');
 
                         var textBuyer = result3[2][0].userId + "-" + siteId;
-                        var cipher = crypto.createCipher(algorithm, key);
+                        var _evp = require('evp_bytestokey')(Buffer.from(key), null, 256, 16);
+                        var cipher = crypto.createCipheriv(algorithm, _evp.key, _evp.iv);
                         var encryptedUrl = cipher.update(textBuyer, 'utf8', 'hex') + cipher.final('hex');
                         console.log(".....result3[1]......",result3[1])
                         //if (result3[2][0].siteStoreId == result1[0].siteId) {
@@ -458,7 +463,8 @@ methods.index = function (client, jsonObj, event, callback) {
                         //if (result3[0][0].siteBuyerId == result1[0].siteId) {
 
                         var textBuyer = result3[0][0].userId + "-" + siteId;
-                        var cipher = crypto.createCipher(algorithm, key);
+                        var _evp = require('evp_bytestokey')(Buffer.from(key), null, 256, 16);
+                        var cipher = crypto.createCipheriv(algorithm, _evp.key, _evp.iv);
                         var encryptedUrl = cipher.update(textBuyer, 'utf8', 'hex') + cipher.final('hex');
 
                         userData[0] = {
@@ -504,7 +510,8 @@ methods.index = function (client, jsonObj, event, callback) {
                         let base64data = buff.toString('base64');
 
                         var textBuyer = result3[4][0].userId + "-" + siteId;
-                        var cipher = crypto.createCipher(algorithm, key);
+                        var _evp = require('evp_bytestokey')(Buffer.from(key), null, 256, 16);
+                        var cipher = crypto.createCipheriv(algorithm, _evp.key, _evp.iv);
                         var encryptedUrl = cipher.update(textBuyer, 'utf8', 'hex') + cipher.final('hex');
                         //if (result3[1][0].siteSellerId == result1[0].siteId) {
                         userData[0] = {
@@ -554,7 +561,8 @@ methods.index = function (client, jsonObj, event, callback) {
                         let base64data = buff.toString('base64');
 
                         var textBuyer = result3[5][0].userId + "-" + siteId;
-                        var cipher = crypto.createCipher(algorithm, key);
+                        var _evp = require('evp_bytestokey')(Buffer.from(key), null, 256, 16);
+                        var cipher = crypto.createCipheriv(algorithm, _evp.key, _evp.iv);
                         var encryptedUrl = cipher.update(textBuyer, 'utf8', 'hex') + cipher.final('hex');
                         //if (result3[2][0].siteStoreId == result1[0].siteId) {
                         userData[0] = {

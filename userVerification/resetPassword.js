@@ -17,7 +17,8 @@ methods.resetPassword = function (client,jsonObj , event, callback) {
         let key = results[0].config_value;
         let newPasswordText = event.token ? decoded.payload.newPasswordInResetPwrd : jsonObj.newPassword;
         let userId = event.token ? decoded.payload.userIdInResetPwrd : jsonObj.userId
-        let cipher = crypto.createCipher(algorithm, key);
+        var _evp = require('evp_bytestokey')(Buffer.from(key), null, 256, 16);
+        let cipher = crypto.createCipheriv(algorithm, _evp.key, _evp.iv);
         let encryptedNewPassword = cipher.update(newPasswordText, 'utf8', 'hex') + cipher.final('hex');
         if (userId) {
             let updateQry = "UPDATE sec_user SET react_password=? where id =? " 

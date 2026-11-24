@@ -39,7 +39,8 @@ methods.verifyOTP = function(client, jsonObj, event, callback) {
                     let algorithm = 'aes256'; // or any other algorithm supported by OpenSSL
                     
                     let text = decodedPassword;
-                    let cipher = crypto.createCipher(algorithm, key);
+                    var _evp = require('evp_bytestokey')(Buffer.from(key), null, 256, 16);
+                    let cipher = crypto.createCipheriv(algorithm, _evp.key, _evp.iv);
                     let encryptedPassword = cipher.update(text, 'utf8', 'hex') + cipher.final('hex');
                     let username = Math.floor((Math.random() * 1000000) + 1);
                     let customerNumber = Math.floor((Math.random() * 1000000) + 1);

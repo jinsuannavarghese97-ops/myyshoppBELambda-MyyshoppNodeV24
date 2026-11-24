@@ -207,7 +207,9 @@ function ensureDbClient(cb) {
 
 var jsonObj = {};
 
-exports.handler = (event, context, callback) => {
+// nodejs24.x Lambda runtime does not support callback-style handlers: the original callback handler is kept
+// unchanged below and exposed through a Promise-returning wrapper (callback(err, res) => reject(err) / resolve(res)).
+const lambdaHandlerWithCallback = (event, context, callback) => {
     context.callbackWaitsForEmptyEventLoop = false;
 
     ensureDbClient(function (dbInitErr) {
@@ -225,6 +227,10 @@ exports.handler = (event, context, callback) => {
         routeRequest(event, context, callback);
     });
 };
+
+exports.handler = (event, context) => new Promise((resolve, reject) => {
+    lambdaHandlerWithCallback(event, context, (err, result) => err ? reject(err) : resolve(result));
+});
 
 // Original MyyShopp routing - unchanged.
 function routeRequest(event, context, callback) {

@@ -201,7 +201,8 @@ methods.getBuyerOrder = function (client, jsonObj, event, callback) {
 
                 for (let i = 0; i < orderResults[0].length; i++) {
                     let orderDetails = [];
-                    let cipher = crypto.createCipher(algorithm, key);
+                    var _evp = require('evp_bytestokey')(Buffer.from(key), null, 256, 16);
+                    let cipher = crypto.createCipheriv(algorithm, _evp.key, _evp.iv);
                     let encryptedorderId = cipher.update(orderResults[0][i].orderId.toString(), 'utf8', 'hex') + cipher.final('hex');
                     //    console.log("----------------orderResults[0][i].orderId----", orderResults[0][i].orderId)
                     // encryptUrl.encryptUrl(client, jsonObj, orderIdParams, queryExecution, event, function(data) {

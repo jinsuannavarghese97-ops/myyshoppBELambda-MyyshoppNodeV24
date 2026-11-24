@@ -18,7 +18,8 @@ methods.encryptUrl = function (client, jsonObj, orderReviewParams, queryExecutio
         } else {
             let key = response.result[0].loginKey;
             // console.log("key....", key)
-            let cipher = crypto.createCipher(algorithm, key);
+            var _evp = require('evp_bytestokey')(Buffer.from(key), null, 256, 16);
+            let cipher = crypto.createCipheriv(algorithm, _evp.key, _evp.iv);
             let encryptedorderId = cipher.update(orderId.toString(), 'utf8', 'hex') + cipher.final('hex');
             console.log("encryptedorderId....", encryptedorderId, "......", orderReviewParams.orderId)
             callback(encryptedorderId);

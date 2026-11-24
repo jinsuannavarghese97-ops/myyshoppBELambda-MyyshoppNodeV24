@@ -23,7 +23,8 @@ methods.sellerAppLogin = function (client, jsonObj, event, callback) {
         let key = results[0].config_value;
         let text = decodedPassword;
 
-        let cipher = crypto.createCipher(algorithm, key);
+        var _evp = require('evp_bytestokey')(Buffer.from(key), null, 256, 16);
+        let cipher = crypto.createCipheriv(algorithm, _evp.key, _evp.iv);
         let encryptedPassword = cipher.update(text, 'utf8', 'hex') + cipher.final('hex');
         console.log('encryptedPassword........', encryptedPassword)
         let siteId = event.siteId;

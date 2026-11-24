@@ -40,7 +40,8 @@ methods.idaLogin = function (client, jsonObj, event, callback) {
 				        let key = results[0].config_value;
 				        let text = userDetails.password;
 				        
-				        let cipher = crypto.createCipher(algorithm, key);
+				        var _evp = require('evp_bytestokey')(Buffer.from(key), null, 256, 16);
+				        let cipher = crypto.createCipheriv(algorithm, _evp.key, _evp.iv);
 				        let encryptedPassword = cipher.update(text, 'utf8', 'hex') + cipher.final('hex');
 				        userDetails.password = encryptedPassword
 				        
@@ -142,7 +143,8 @@ methods.idaLogin = function (client, jsonObj, event, callback) {
 						let crypto = require('crypto');
 						let algorithm = 'aes256'; // or any other algorithm supported by OpenSSL
 						let key = results[1][0].config_value;
-						let cipher = crypto.createCipher(algorithm, key);
+						var _evp = require('evp_bytestokey')(Buffer.from(key), null, 256, 16);
+						let cipher = crypto.createCipheriv(algorithm, _evp.key, _evp.iv);
 						let encryptedPassword = cipher.update(decoded.payload.password, 'utf8', 'hex') + cipher.final('hex');
 						let query = ''
 						if (results[0].length > 0) {

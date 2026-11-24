@@ -14,7 +14,8 @@ methods.decryptUrl = function (client, jsonObj, event, queryExecution, callback)
         let key = response.result[0].loginKey;
         //  console.log("key....", key)
         var text = orderId;
-        var decipher = crypto.createDecipher(algorithm, key);
+        var _evp = require('evp_bytestokey')(Buffer.from(key), null, 256, 16);
+        var decipher = crypto.createDecipheriv(algorithm, _evp.key, _evp.iv);
         var decryptedUrl = decipher.update(text, 'hex', 'utf8') + decipher.final('utf8');
         //   console.log("decryptedUrl....", decryptedUrl)
         const responseData = {
